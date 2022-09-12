@@ -420,7 +420,7 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
 
     # Reduce job that sorts and prints output
     reduce = Process(target=reduce_process, args=(output_queue, output))
-    reduce.start()
+    #reduce.start()
 
     # initialize jobs queue
     jobs_queue = Queue(maxsize=maxsize)
@@ -458,7 +458,7 @@ def process_dump(input_file, template_file, out_file, file_size, file_compress,
     # signal end of work to reduce process
     output_queue.put(None)
     # wait for it to finish
-    reduce.join()
+    #reduce.join()
 
     if output != sys.stdout:
         output.close()
