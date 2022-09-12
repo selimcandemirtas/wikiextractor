@@ -63,7 +63,7 @@ from io import StringIO
 from multiprocessing import Queue, get_context, cpu_count
 from timeit import default_timer
 
-from .extract import Extractor, ignoreTag, define_template, acceptedNamespaces
+from extract import Extractor, ignoreTag, define_template, acceptedNamespaces
 
 # ===========================================================================
 
@@ -530,7 +530,7 @@ def main():
     global acceptedNamespaces
     global expand_templates, templateCache
 
-    parser = argparse.ArgumentParser(prog=os.path.basename(sys.argv[0]),
+    '''parser = argparse.ArgumentParser(prog=os.path.basename(sys.argv[0]),
                                      formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description=__doc__)
     parser.add_argument("input",
@@ -574,7 +574,30 @@ def main():
                         version='%(prog)s ' + __version__,
                         help="print program version")
 
-    args = parser.parse_args()
+    args = parser.parse_args()'''
+
+    argsDict = {
+        'input': 'trwiki.xml.bz2',
+        'output': 'extracted',
+        'compress': True,
+        'bytes': '250K',
+        'json': False,
+
+        'html': False,
+        'links': False,
+        'namespaces': '',
+        'templates': None,
+        'no_templates': True,
+        'html_safe': True,
+        'processes': cpu_count() - 1,
+
+        'quiet': False,
+        'debug': False,
+        'article': False,
+        'version': '%(prog)s ' + __version__
+    }
+    
+    args = type('args', (object,), argsDict)
 
     Extractor.keepLinks = args.links
     Extractor.HtmlFormatting = args.html
